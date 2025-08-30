@@ -170,10 +170,11 @@
         const item = document.createElement('div');
         item.className = 'item';
         item.draggable = true;
+        item.dataset.originalPosition = idx + 1; // Store original position
 
         const num = document.createElement('div');
         num.className = 'num';
-        num.textContent = idx + 1;
+        num.textContent = idx + 1; // Original number stays fixed
 
         const t = document.createElement('div');
         t.className = 'text';
@@ -186,11 +187,12 @@
         item.addEventListener('dragstart', () => {
           draggingEl = item;
           item.classList.add('dragging');
+          showPositionIndicator(item);
         });
         item.addEventListener('dragend', () => {
           item.classList.remove('dragging');
           draggingEl = null;
-          updateNumbers();
+          hidePositionIndicator();
         });
         item.addEventListener('dragover', (e) => {
           e.preventDefault();
@@ -200,11 +202,11 @@
           } else {
             listEl.insertBefore(draggingEl, after);
           }
+          updatePositionIndicator(e.clientY);
         });
 
         listEl.appendChild(item);
       });
-      updateNumbers();
     }
 
     function getDragAfterElement(container, y) {
@@ -226,6 +228,49 @@
       });
     }
 
+    function showPositionIndicator(item) {
+      // Create position indicator
+      const indicator = document.createElement('div');
+      indicator.id = 'position-indicator';
+      indicator.style.position = 'absolute';
+      indicator.style.background = 'rgba(229, 9, 20, 0.3)';
+      indicator.style.border = '2px dashed var(--accent)';
+      indicator.style.borderRadius = '12px';
+      indicator.style.padding = '14px';
+      indicator.style.zIndex = '1000';
+      indicator.style.pointerEvents = 'none';
+      indicator.style.display = 'none';
+      document.body.appendChild(indicator);
+    }
+
+    function updatePositionIndicator(y) {
+      const indicator = document.getElementById('position-indicator');
+      if (!indicator) return;
+      
+      const items = [...listEl.querySelectorAll('.item:not(.dragging)')];
+      let targetPosition = items.length + 1;
+      
+      for (let i = 0; i < items.length; i++) {
+        const box = items[i].getBoundingClientRect();
+        if (y < box.top + box.height / 2) {
+          targetPosition = i + 1;
+          break;
+        }
+      }
+      
+      indicator.textContent = `Drop at position: ${targetPosition}`;
+      indicator.style.display = 'block';
+      indicator.style.left = listEl.getBoundingClientRect().left + 'px';
+      indicator.style.top = (y - 30) + 'px';
+    }
+
+    function hidePositionIndicator() {
+      const indicator = document.getElementById('position-indicator');
+      if (indicator) {
+        indicator.remove();
+      }
+    }
+
     function currentOrderArray() {
       return [...listEl.children].map(el => el.querySelector('.text').textContent);
     }
@@ -241,8 +286,8 @@
       }
     });
 
-    // Initialize with shuffled order
-    renderList(shuffle(correctOrder));
+    // Initialize with original order (no shuffling)
+    renderList(correctOrder);
   </script>
 </body>
 </html>
