@@ -68,17 +68,38 @@
     .item {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       background: var(--card);
       border: 1px solid rgba(255,255,255,0.1);
-      padding: 14px;
+      padding: 12px 16px;
       border-radius: 12px;
       user-select: none;
       cursor: grab;
       transition: background .15s ease, transform .08s ease;
+      max-width: 85vw;
+      min-height: 60px;
+      touch-action: none;
     }
-    .item:active { cursor: grabbing; transform: scale(0.995); }
+    .item:active { cursor: grabbing; transform: scale(0.98); }
     .item:hover { background: var(--card-hover); }
+
+    /* Mobile specific styles */
+    @media (max-width: 768px) {
+      .item {
+        padding: 16px 20px;
+        min-height: 70px;
+        gap: 12px;
+      }
+      .num {
+        min-width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      .text {
+        font-size: 16px;
+        line-height: 1.4;
+      }
+    }
 
     .num {
       min-width: 28px;
