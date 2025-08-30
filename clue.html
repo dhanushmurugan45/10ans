@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IPO Clue Quiz - Red & Black</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --panel: #121212;
+      --accent: #e50914;
+      --accent-2: #ff3b3b;
+      --text: #f2f2f2;
+      --muted: #b3b3b3;
+      --card: #171717;
+      --card-hover: #1f1f1f;
+      --ring: rgba(229, 9, 20, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(229,9,20,0.15), transparent 60%),
+                  radial-gradient(900px 500px at 120% 10%, rgba(229,9,20,0.08), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: min(900px, 95vw);
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 6px;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .board { padding: 18px; }
+
+    .clue-text {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      background: var(--accent);
+      font-size: 16px;
+    }
+    .btn:hover { background: var(--accent-2); }
+
+    .result {
+      padding: 12px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .correct { color: lime; }
+    .wrong { color: orange; }
+
+    /* Mobile specific styles */
+    @media (max-width: 768px) {
+      .clue-text {
+        padding: 16px;
+        font-size: 14px;
+      }
+      .input-group input {
+        padding: 10px;
+        font-size: 14px;
+      }
+      .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>day 1 clue </h1>
+      <p class="sub">Read the clue and provide the correct answer.</p>
+    </header>
+
+    <section class="board">
+      <div class="clue-text">
+        "IPO CLUE ENNA NAH ENNA EVALO TIME KADUPPE ETHIRUPPAH ATHANALA NE ENNA PANNU ENNA SAMATHANAM PADUTHURA MARI ORU 30 SEC SONG PADI SEND PANNU ATHA KETU NAN OKAY ANA NAH UNAKKKU OUR CLUE THARAN"<br><br>
+        "NOTE PANNU THANGAM INTHA CLUE ONE DAY MATUM THAN APRM NEXT DAY KKU VERA ETHAVATHU VARUM"<br><br>
+        "ENNA CLUE VARUM NAH ORU CORRECT ANSWER SOLLUVAN LIKE (ATHU ENTHA PLACE LA VARUM NU)"
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const correctAnswer = "IPO"; // Assuming the answer is "IPO" based on the clue
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const userAnswer = document.getElementById('answer').value.trim().toUpperCase();
+      const resultEl = document.getElementById('result');
+
+      if (userAnswer === correctAnswer) {
+        resultEl.textContent = "✅ Correct! Well done.";
+        resultEl.className = "result correct";
+      } else {
+        resultEl.textContent = "❌ Wrong answer. Try again!";
+        resultEl.className = "result wrong";
+      }
+    });
+  </script>
+</body>
+</html>
